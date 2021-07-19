@@ -1,33 +1,54 @@
-const int MAX_N = 1 << 17;
+#include <iostream>
+#include <vector>
 
-int bit[MAX_N];
-
-int a[100]; // input
-int n = 10000;
-// a1 + a2 + .... + ai
-int sum(int i){
-  int s = 0;
-  while(i > 0){
-    s += bit[i];
-    i -= i & -i;
+template<typename T>
+class BIT{
+private:
+  std::vector<T> bit;
+  int n;
+public:
+  BIT(int n) : n(n) {
+    bit.assign(n, (T)0);
   }
-  return s;
-}
 
-void add(int i, int x){
-  while(i <= n){
-    bit[i] += x;
-    i += i & -i;
+  virtual ~BIT(){}
+
+  // a1 + a2 + .... + ai
+  int sum(int i){
+    int s = 0;
+    while(i > 0){
+      s += bit[i];
+      i -= i & -i;
+    }
+    return s;
   }
-}
+
+  void add(int i, T x){
+    while(i <= n){
+      bit[i] += x;
+      i += i & -i;
+    }
+  }
+};
 
 
 void solve(){
-  typedef long long int ll;
-  ll ans = 0;
-  for(int j=0;j<n;j++){
-    ans += j - sum(a[j]);
-    add(a[j], 1);
+  BIT<int> bit(100);
+  std::vector<int> a(20);
+  int ans = 0;
+  for(int i=0;i<20;i++){
+    a[i] = (3*i + 2)%13 + 1;
   }
-  // print("%lld\n",ans)
+  for(int j=0;j<a.size();j++){
+    ans += j - bit.sum(a[j]);
+    bit.add(a[j], 1);
+  }
+  std::cout << ans << std::endl;
 }
+
+int main(int argc, char *argv[])
+{
+  solve();
+  return 0;
+}
+

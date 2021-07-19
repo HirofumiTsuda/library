@@ -1,55 +1,64 @@
 #include <iostream>
+#include <vector>
 
-#define MAX_N 10000
 
+template<typename T>
+class UnionFind{
+private:
+  std::vector<T> par;
+  std::vector<T> rank;
+  std::vector<T> size;
 
-int par[MAX_N];
-int rank[MAX_N];
-int size[MAX_N];
-
-void init(int n){
-  for(int i=0;i<n;i++){
-    par[i] = i;
-    rank[i] = 0;
-    size[i] = 1;
+public:
+  UnionFind(int n){
+    par.assign(n, (T)0);
+    rank.assign(n, (T)0);
+    size.assign(n, (T)0);
+    for(int i=0;i<n;i++){
+      par[i] = i;
+      rank[i] = 0;
+      size[i] = 1;
+    }    
   }
-}
 
-int find(int x){
-  if(par[x] == x){
-    return x;
-  }else{
-    return par[x] = find(par[x]);
+  virtual ~UnionFind(){}
+
+  int find(T x){
+    if(par[x] == x){
+      return x;
+    }else{
+      return par[x] = find(par[x]);
+    }
+  }  
+
+  void unite(T x, T y){
+    x = find(x);
+    y = find(y);
+    if (x == y)
+      return;
+
+    if(rank[x] < rank[y]){
+      par[x] = y;
+      size[y] = size[x] + size[y];
+    }else{
+      par[y] = x;
+      size[x] = size[x] + size[y];    
+      if(rank[x] == rank[y])
+	rank[x]++;
+    }
   }
-}
 
-void unite(int x, int y){
-  x = find(x);
-  y = find(y);
-  if (x == y)
-    return;
+  bool same(int x, int y){
+    return find(x) == find(y);
+  }  
+};
 
-  if(rank[x] < rank[y]){
-    par[x] = y;
-    size[y] = size[x] + size[y];
-  }else{
-    par[y] = x;
-    size[x] = size[x] + size[y];    
-    if(rank[x] == rank[y])
-      rank[x]++;
-  }
-}
-
-bool same(int x, int y){
-  return find(x) == find(y);
-}
 
 
 int main(void){
-  init(10);
-  unite(2,3);
-  unite(4,5);
-  for(int i=0;i<10;i++){
-    std::cout << par[i] << std::endl;
-  }
+  UnionFind<int> uf(10);
+  uf.unite(2,3);
+  uf.unite(4,5);
+  uf.unite(3,4);  
+  std::cout << uf.same(2,5) << std::endl;
 }
