@@ -61,5 +61,5 @@ int main(){
   for(int i=0;i<10;i++){
     rmq.update(i, i+4);
   }
-  std::cout << rmq.get_min(1,4) << std::endl;
+  std::cout << rmq.get_min(1,2) << std::endl;
 }

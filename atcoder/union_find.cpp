@@ -23,7 +23,7 @@ public:
 
   virtual ~UnionFind(){}
 
-  int find(T x){
+  T find(T x){
     if(par[x] == x){
       return x;
     }else{
@@ -31,6 +31,10 @@ public:
     }
   }  
 
+  T get_size(T x){
+    return size[find(x)];
+  }
+  
   void unite(T x, T y){
     x = find(x);
     y = find(y);
