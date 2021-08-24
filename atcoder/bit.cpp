@@ -23,6 +23,7 @@ public:
     return s;
   }
 
+  // 1-index
   void add(int i, T x){
     while(i <= n){
       bit[i] += x;
