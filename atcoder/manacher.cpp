@@ -8,24 +8,22 @@
 
 std::vector<int> manacher(std::string s){
   std::vector<int> R(s.size());
-  int c = 0;
-  for (int i = 0; i < s.size(); ++i) {
-    int l = c - (i-c);
-    if (i+R[l] < c+R[c]) {
-      R[i] = R[l];
-    } else {
-      int j = c+R[c] - i;
-      while (i-j >= 0 && i+j < s.size() && s[i-j] == s[i+j])
-	j++;
-      R[i] = j;
-      c = i;
-    }
+  int i = 0, j = 0;
+  while (i < s.size()) {
+    while (i-j >= 0 && i+j < s.size() && s[i-j] == s[i+j]) ++j;
+    R[i] = j;
+    int k = 1;
+    while (i-k >= 0 && k+R[i-k] < j) R[i+k] = R[i-k], ++k;
+    i += k; j -= k;
   }
   return std::move(R);
 }
 
 int main(void){
-  std::string s = "abaaababa";
+  //"ababbb"
+  //std::string s = "abaaababa";
+  std::string s = "ababbb";
+  s = "ggbswiymmlevedhkbdhntnhdbkhdevelmmyiwsbgg";
   std::vector<int> v = manacher(s);
   for(int i=0;i<v.size();i++)
     std::cout << v[i] << std::endl;
