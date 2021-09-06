@@ -2,18 +2,17 @@
 #include <vector>
 
 
-template<typename T>
 class UnionFind{
 private:
-  std::vector<T> par;
-  std::vector<T> rank;
-  std::vector<T> size;
+  std::vector<int> par;
+  std::vector<int> rank;
+  std::vector<int> size;
 
 public:
   UnionFind(int n){
-    par.assign(n, (T)0);
-    rank.assign(n, (T)0);
-    size.assign(n, (T)0);
+    par.assign(n, 0);
+    rank.assign(n, 0);
+    size.assign(n, 0);
     for(int i=0;i<n;i++){
       par[i] = i;
       rank[i] = 0;
@@ -23,7 +22,7 @@ public:
 
   virtual ~UnionFind(){}
 
-  T find(T x){
+  int find(int x){
     if(par[x] == x){
       return x;
     }else{
@@ -31,11 +30,11 @@ public:
     }
   }  
 
-  T get_size(T x){
+  int get_size(int x){
     return size[find(x)];
   }
   
-  void unite(T x, T y){
+  void unite(int x, int y){
     x = find(x);
     y = find(y);
     if (x == y)
