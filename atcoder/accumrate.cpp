@@ -73,11 +73,10 @@ public:
       }
     }
   }
-  // [4,4] - [1,1] rectangle
-  T get(int tx, int ty, int sx, int sy) {
+  // [1,1] - [4,4] rectangle
+  T get(int sx, int sy, int tx, int ty) {
     if (tx < sx or ty < sy) return 0;
     T rs = dat[ty][tx];
-    std::cout << rs << std::endl;
     if (0 < sx) rs -= dat[ty][sx - 1];
     if (0 < sy) rs -= dat[sy - 1][tx];
     if (0 < sx && 0 < sy) rs += dat[sy - 1][sx - 1];
@@ -97,6 +96,6 @@ int main(void){
     v.push_back(tmp);
   }
   Accumrate2D<int> ac(v);
-  std::cout << ac.get(3,3, 1,1) << std::endl;
+  std::cout << ac.get(1,1, 1,1) << std::endl;
 }
   
