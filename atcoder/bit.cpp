@@ -14,8 +14,8 @@ public:
   virtual ~BIT(){}
 
   // a1 + a2 + .... + ai
-  int sum(int i){
-    int s = 0;
+  T sum(int i){
+    T s = 0;
     while(i > 0){
       s += bit[i];
       i -= i & -i;
