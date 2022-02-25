@@ -58,10 +58,10 @@ public:
     build();
   }
   void set(int x, int y, T c) {
-    v[x][y] = c;
+    v[y][x] = c;
   }
   void add(int x, int y, T c) {
-    v[x][y] += c;
+    v[y][x] += c;
   }
   void build() {
     dat = v;
@@ -96,6 +96,6 @@ int main(void){
     v.push_back(tmp);
   }
   Accumrate2D<int> ac(v);
-  std::cout << ac.get(1,1, 1,1) << std::endl;
+  std::cout << ac.get(1,1, 4,3) << std::endl;
 }
   
